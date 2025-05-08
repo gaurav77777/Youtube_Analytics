@@ -4,11 +4,18 @@ from src.transforms import clean_data, analyze_data
 def run_etl():
     spark = SparkSession.builder.appName("YouTube Analytics").getOrCreate()
 
-    df = spark.read.option("header", True).csv("data/USvideos.csv")
+    #df = spark.read.option("header", True).csv("data/USvideos.csv")
+
+    # Correct local path to the file
+    df = spark.read.csv("file:///mnt/sda4/Project/youtube-analytics/data/USvideos.csv", header=True, inferSchema=True)
+
 
     df_clean = clean_data(df)
     df_result = analyze_data(df_clean)
 
-    df_result.write.mode("overwrite").parquet("output/processed_data")
+    
+    #df_result.write.mode("overwrite").parquet("output/processed_data")
+    df_result.write.mode("overwrite").parquet("file:///mnt/sda4/Project/youtube-analytics/output/processed_data")
+
 
     spark.stop()
