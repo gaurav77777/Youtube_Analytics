@@ -30,3 +30,5 @@ Start Airflow :
 
 Run the Streamlit : streamlit run dashboard.py
 
+To run the pytest test case run this command : pytest
+
