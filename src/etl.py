@@ -26,6 +26,7 @@ def run_etl():
 
     logger.info("Cleaning data...")
     df_clean = clean_data(df)
+    df_clean.show()
 
     logger.info("Analyzing data...")
     df_result = analyze_data(df_clean)

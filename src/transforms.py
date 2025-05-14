@@ -1,4 +1,5 @@
 from pyspark.sql.functions import col, desc
+from pyspark.sql.functions import col, substring, lit, concat
 from src.utils import get_logger
 
 
@@ -7,7 +8,10 @@ logger = get_logger("Transforms")
 def clean_data(df):
     logger.info("Selecting and casting relevant columns...")
     return df.select(
-        "video_id", "title", "channel_title", "category_id",
+        "video_id", "title",
+          #"channel_title",
+          concat(substring(col("channel_title"), 1, 1), lit("***")).alias("channel_title"),
+          "category_id",
         col("views").cast("int"),
         col("likes").cast("int"),
         col("dislikes").cast("int")
